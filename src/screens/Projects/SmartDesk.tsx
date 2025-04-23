@@ -79,7 +79,7 @@ export const SmartDesk: React.FC = () => {
             {/* Project Poster */}
             <div className="bg-black/30 backdrop-blur-sm rounded-xl p-8 opacity-0 animate-fade-in-up-3">
               <img 
-                src="/capstoneposter.png" 
+                src={import.meta.env.BASE_URL + "capstoneposter.png"} 
                 alt="Smart Desk Capstone Poster" 
                 className="w-full h-auto rounded-lg shadow-lg"
               />
@@ -94,7 +94,7 @@ export const SmartDesk: React.FC = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="flex flex-col items-center">
                   <img 
-                    src="/smartdeskapp1.jpg" 
+                    src={import.meta.env.BASE_URL + "smartdeskapp1.jpg"} 
                     alt="Smart Desk App Screenshot 1" 
                     className="w-full h-auto rounded-lg shadow-lg"
                   />
@@ -102,7 +102,7 @@ export const SmartDesk: React.FC = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <img 
-                    src="/smartdeskapp2.jpg" 
+                    src={import.meta.env.BASE_URL + "smartdeskapp2.jpg"} 
                     alt="Smart Desk App Screenshot 2" 
                     className="w-full h-auto rounded-lg shadow-lg"
                   />
@@ -110,7 +110,7 @@ export const SmartDesk: React.FC = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <img 
-                    src="/smartdeskapp3.jpg" 
+                    src={import.meta.env.BASE_URL + "smartdeskapp3.jpg"} 
                     alt="Smart Desk App Screenshot 3" 
                     className="w-full h-auto rounded-lg shadow-lg"
                   />
@@ -118,7 +118,7 @@ export const SmartDesk: React.FC = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <img 
-                    src="/smartdeskapp4.jpg" 
+                    src={import.meta.env.BASE_URL + "smartdeskapp4.jpg"} 
                     alt="Smart Desk App Screenshot 4" 
                     className="w-full h-auto rounded-lg shadow-lg"
                   />
@@ -161,7 +161,7 @@ export const SmartDesk: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex flex-col items-center">
                   <img 
-                    src="/smartdeskapp5.jpg" 
+                    src={import.meta.env.BASE_URL + "smartdeskapp5.jpg"} 
                     alt="Smart Desk CAD Design - Front View" 
                     className="w-full h-auto rounded-lg shadow-lg"
                   />
@@ -169,7 +169,7 @@ export const SmartDesk: React.FC = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <img 
-                    src="/smartdeskapp6.jpg" 
+                    src={import.meta.env.BASE_URL + "smartdeskapp6.jpg"} 
                     alt="Smart Desk CAD Design - Components" 
                     className="w-full h-auto rounded-lg shadow-lg"
                   />
@@ -212,7 +212,7 @@ export const SmartDesk: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col items-center">
                   <img 
-                    src="/cypress_semiconductor_logo.jpg" 
+                    src={import.meta.env.BASE_URL + "cypress_semiconductor_logo.jpg"} 
                     alt="Cypress BLE Board" 
                     className="w-32 h-20 object-contain mb-2 bg-white p-2 rounded-lg"
                   />

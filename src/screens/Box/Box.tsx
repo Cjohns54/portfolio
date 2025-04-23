@@ -190,7 +190,7 @@ export const Box = (): JSX.Element => {
             <div className="w-64 h-64 md:w-72 md:h-72 rounded-full relative">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 to-blue-500/50 rounded-full group-hover:opacity-75 transition-opacity duration-500"></div>
               <img
-                src="/headshot.jpg"
+                src={import.meta.env.BASE_URL + "headshot.jpg"}
                 alt="Professional headshot"
                 className="w-full h-full object-cover rounded-full p-2"
               />
