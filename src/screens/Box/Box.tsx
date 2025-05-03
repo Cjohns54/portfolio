@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
@@ -149,100 +149,170 @@ export const Box = (): JSX.Element => {
     },
   ];
 
+  const [animateBG, setAnimateBG] = useState(true);
+  const [showGradient, setShowGradient] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  useEffect(() => {
+    const timeout = setTimeout(() => setAnimateBG(false), 2000);
+    const timeout2 = setTimeout(() => setShowGradient(true), 2200);
+    const timeout3 = setTimeout(() => setShowContent(true), 2600);
+    return () => {
+      clearTimeout(timeout);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-blue-900 text-white relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
+    <>
+    <style>{`
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; background: linear-gradient(270deg, #7c3aed, #2563eb, #a21caf, #0ea5e9, #7c3aed); }
+        50% { background-position: 100% 50%; background: linear-gradient(270deg, #7c3aed, #2563eb, #a21caf, #0ea5e9, #7c3aed); }
+        100% { background-position: 0% 50%; background: linear-gradient(to bottom right, #000, #6d28d9, #1e40af); }
+      }
+      .animated-gradient {
+        background: linear-gradient(270deg, #7c3aed, #2563eb, #a21caf, #0ea5e9, #7c3aed);
+        background-size: 200% 200%;
+        animation: gradientBG 2s ease-in-out 1;
+      }
+      .parallax-blob {
+        transition: transform 0.3s cubic-bezier(.25,.8,.25,1);
+      }
+      .typewriter {
+        overflow: hidden;
+        border-right: .15em solid #fff;
+        white-space: nowrap;
+        margin: 0 auto;
+        letter-spacing: .08em;
+        animation: typing 2.2s steps(30, end), blink-caret .75s step-end infinite;
+      }
+      @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+      }
+      @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: #fff; }
+      }
+      .clip-reveal {
+        clip-path: circle(0% at 50% 50%);
+        animation: revealCircle 1.2s cubic-bezier(.77,0,.18,1) 0.3s forwards;
+      }
+      @keyframes revealCircle {
+        to { clip-path: circle(75% at 50% 50%); }
+      }
+      .shimmer-arrow {
+        background: linear-gradient(90deg, #fff 0%, #60a5fa 50%, #fff 100%);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 2s linear infinite;
+      }
+      @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      .bg-fade {
+        transition: background 0.8s cubic-bezier(.77,0,.18,1);
+      }
+      .fade-in-content {
+        opacity: 0;
+        transition: opacity 0.7s cubic-bezier(.77,0,.18,1);
+      }
+      .fade-in-content.visible {
+        opacity: 1;
+      }
+    `}</style>
+    <div className={`min-h-screen bg-fade ${showGradient ? "bg-gradient-to-br from-black via-purple-900 to-blue-900" : "bg-black"} text-white relative overflow-hidden flex flex-col justify-between`}>
+      {/* Parallax SVG Blobs */}
+      <svg className="absolute top-[-10%] left-[-10%] w-96 h-96 opacity-30 parallax-blob z-0" style={{ filter: 'blur(40px)' }} viewBox="0 0 200 200"><circle fill="#a21caf" cx="100" cy="100" r="100" /></svg>
+      <svg className="absolute top-[20%] right-[-10%] w-80 h-80 opacity-20 parallax-blob z-0" style={{ filter: 'blur(32px)' }} viewBox="0 0 200 200"><ellipse fill="#2563eb" cx="100" cy="100" rx="100" ry="80" /></svg>
+      <svg className="absolute bottom-[-10%] left-[30%] w-96 h-96 opacity-20 parallax-blob z-0" style={{ filter: 'blur(48px)' }} viewBox="0 0 200 200"><ellipse fill="#0ea5e9" cx="100" cy="100" rx="90" ry="100" /></svg>
 
-      {/* Navigation */}
-      <header className="container mx-auto py-4 flex justify-between items-center relative z-10">
-        <div className="text-2xl font-bold opacity-0 animate-fade-in-up-1">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 hover:from-blue-400 hover:to-purple-400 transition-all duration-500">
-            Hello, welcome!
-          </span>
+      {/* Landing Hero Section */}
+      <section className="relative flex flex-col items-center justify-center min-h-screen pt-16 z-10 select-none">
+        {/* Profile Image with circular reveal */}
+        <div className="relative group mb-6 clip-reveal" style={{ animationFillMode: 'forwards' }}>
+          <div className="absolute -inset-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur opacity-60 group-hover:opacity-90 transition duration-1000 group-hover:duration-200 animate-blob"></div>
+          <div className="w-48 h-48 md:w-56 md:h-56 rounded-full relative shadow-lg border-4 border-purple-400/30 group-hover:border-blue-400/60 transition-all duration-500">
+            <img
+              src={import.meta.env.BASE_URL + "headshot.jpg"}
+              alt="Professional headshot"
+              className="w-full h-full object-cover rounded-full p-2 group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
         </div>
-        <nav className="opacity-0 animate-fade-in-up-2">
-          <ul className="flex space-x-6">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a
-                  href={link.href}
-                  className="text-white hover:text-purple-400 transition-colors duration-300 relative group"
-                >
-                  {link.name}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 group-hover:w-full transition-all duration-300"></span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
-
-      {/* Hero Section */}
-      <section className="container mx-auto py-16 text-center relative z-10">
-        <div className="flex flex-col items-center max-w-4xl mx-auto">
-          <div className="relative group mb-12 opacity-0 animate-scale-in">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-blob"></div>
-            <div className="w-64 h-64 md:w-72 md:h-72 rounded-full relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 to-blue-500/50 rounded-full group-hover:opacity-75 transition-opacity duration-500"></div>
-              <img
-                src={import.meta.env.BASE_URL + "headshot.jpg"}
-                alt="Professional headshot"
-                className="w-full h-full object-cover rounded-full p-2"
-              />
-            </div>
-            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-black/30 backdrop-blur-sm px-6 py-2 rounded-full">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 font-semibold">
-                Connor Johnson
-              </span>
+        {/* Name and Title with typewriter effect */}
+        <div className="text-center mb-2">
+          <h1 className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 mb-2 typewriter">Connor Johnson</h1>
+          <div className={`fade-in-content${showContent ? " visible" : ""}`}> 
+            <div className="text-lg md:text-2xl text-blue-200 font-semibold tracking-wide mb-2">
+              Full Stack Developer & Cloud Solutions Architect
             </div>
           </div>
-
-          <div className="text-center">
-            <h1 className="text-5xl font-bold mb-6">
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 opacity-0 animate-fade-in-up-2">
-                Full Stack Developer
-              </span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 animate-fade-in-up-3">
-                Cloud Solutions Architect
-              </span>
-            </h1>
-
-            <p className="max-w-2xl mx-auto text-gray-300 mt-6 mb-8 text-lg opacity-0 animate-fade-in-up-3">
-              Experienced software engineer with 5+ years of expertise in full-stack development
-              and cloud architecture. Specializing in building scalable applications using
-              modern technologies and best practices.
-            </p>
-
-            <div className="flex justify-center space-x-4 opacity-0 animate-fade-in-up-4">
-              <Link to="/contact">
-                <Button 
-                  variant="outline" 
-                  className="rounded-full px-8 py-3 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white transition-all duration-300"
-                >
-                  Get in Touch
-                </Button>
-              </Link>
-              <Button
-                variant="outline"
-                className="rounded-full px-8 py-3 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white transition-all duration-300"
-                onClick={() => {
-                  const link = document.createElement('a');
-                  link.href = '/Resume2025.pdf';
-                  link.download = 'Connor_Johnson_Resume_2025.pdf';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                }}
-              >
-                Download CV
-              </Button>
+        </div>
+        {/* Summary Card (slides up after delay) */}
+        <div className={`w-full flex justify-center fade-in-content${showContent ? " visible" : ""}`}>
+          <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-300 text-lg mt-6 px-2 md:px-8">
+            {/* Education */}
+            <div className="bg-black/30 rounded-xl p-8 shadow-lg flex flex-col items-start">
+              <div className="text-2xl font-extrabold text-purple-400 mb-2">🎓 Bachelor of Engineering, Computer Engineering</div>
+              <div className="text-sm text-gray-400 mb-2">University of Guelph (Graduating Dec 2025)</div>
+              <ul className="list-disc list-inside text-base pl-4">
+                <li>Advanced Mathematics & Statistics</li>
+                <li>Computer Science & Programming</li>
+                <li>Digital & Embedded Systems</li>
+                <li>Hardware Design</li>
+              </ul>
+            </div>
+            {/* Industry Experience */}
+            <div className="bg-black/30 rounded-xl p-8 shadow-lg flex flex-col items-start">
+              <div className="text-2xl font-extrabold text-blue-400 mb-2">💼 5 Software Engineering Internships</div>
+              <div className="text-sm text-gray-400 mb-2">Startups & Major Firms (e.g., Ansys)</div>
+              <ul className="list-disc list-inside text-base pl-4">
+                <li>Cloud Development (AWS, Azure)</li>
+                <li>Embedded Systems & IoT</li>
+                <li>Full-Stack Web Applications</li>
+                <li>Agile & Cross-Functional Teams</li>
+              </ul>
+            </div>
+            {/* Leadership & Impact */}
+            <div className="bg-black/30 rounded-xl p-8 shadow-lg flex flex-col items-start">
+              <div className="text-2xl font-extrabold text-pink-400 mb-2">🚀 Experienced Leader</div>
+              <div className="text-sm text-gray-400 mb-2">CTO & Product Manager at EasierEmails.com</div>
+              <ul className="list-disc list-inside text-base pl-4 mt-2">
+                <li>Led development teams on SaaS platforms</li>
+                <li>Delivered under pressure in fast-paced environments</li>
+                <li>Balanced technical excellence with real-world problem solving</li>
+              </ul>
             </div>
           </div>
+        </div>
+        {/* Buttons (fade in after summary) */}
+        <div className={`flex flex-col md:flex-row gap-4 mt-8 fade-in-content${showContent ? " visible" : ""}`}>
+          <Link to="/contact">
+            <Button 
+              variant="outline" 
+              className="rounded-full px-8 py-3 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white transition-all duration-300 shadow-lg animate-bounce-once"
+            >
+              Get in Touch
+            </Button>
+          </Link>
+          <Button
+            variant="outline"
+            className="rounded-full px-8 py-3 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white transition-all duration-300 shadow-lg animate-bounce-once"
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = import.meta.env.BASE_URL + 'Resume2025.pdf';
+              link.download = 'Connor_Johnson_Resume_2025.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+          >
+            Download CV
+          </Button>
         </div>
       </section>
 
@@ -439,17 +509,15 @@ export const Box = (): JSX.Element => {
         <h2 className="text-2xl font-bold text-center mb-10">Contact</h2>
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-gray-400 mb-8">
-            I am a Full-Stack Software Engineer with expertise in cloud architecture
-            and modern web technologies. Always interested in taking on new challenges
-            and collaborating on innovative projects.
+            For business inquires or work opportunities please contact me
           </p>
           <div className="flex items-center justify-center mb-6">
             <span className="text-gray-400 mr-2">📧</span>
             <a
-              href="mailto:contact@example.com"
+              href="mailto:connorjohnsontech@gmail.com"
               className="text-white hover:text-gray-300"
             >
-              contact@example.com
+              connorjohnsontech@gmail.com
             </a>
           </div>
           <div className="flex justify-center space-x-6">
@@ -469,5 +537,6 @@ export const Box = (): JSX.Element => {
         </div>
       </section>
     </div>
+    </>
   );
 };
